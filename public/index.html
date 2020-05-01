@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Document</title>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="./main.js"></script>
+</head>
+<body>
+  <div id="messages"></div>
+
+  <form onSubmit="return sendMessage(this)">
+    <input type="text" id="username" placeholder="name">
+    <input type="text" id="text" placeholder="message">
+    <input type="submit" value="send">
+  </form>
+</body>
+</html>
