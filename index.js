@@ -3,7 +3,7 @@ var app = express();
 var server = require('http').Server(app);
 
 app.get('/', (req, res) => {
-  res.send('Hi');
+  res.send('Hi world!');
 })
 
 server.listen(8080, () => {
