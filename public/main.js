@@ -1,7 +1,11 @@
-var socket = io.connect("http://localhost:8080", { 'forceNew': true });
+var socket = io.connect("http://localhost:8090", { 'forceNew': true });
 
 socket.on("messages", data => {
   render(data);
+});
+
+socket.on("typping", data => {
+  renderTypping(data);
 });
 
 const sendMessage = (e) => {
@@ -14,11 +18,30 @@ const sendMessage = (e) => {
   return false;
 };
 
-const render = data => {
+const toogleTypping = (action) => {
+  socket.emit(action, document.getElementById('username').value);
+  return false;
+}
 
+const isTypping = (e) => {
+  toogleTypping("is-typping");
+};
+
+const isNotTypping = (e) => {
+  toogleTypping("is-not-typping");
+}
+
+const render = data => {
   var html = data.map(elem => {
     return `<div>${elem.name}: - ${elem.message}</div>`;
   }).join("");
   document.getElementById("messages").innerHTML = html;
 };
 
+const renderTypping = data => {
+  var html = data.map(elem => {
+    return `<div>${elem} is typping...</div>`;
+  }).join("");
+
+  document.getElementById("activity").innerHTML = html;
+};

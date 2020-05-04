@@ -8,6 +8,8 @@ var messages = [{
   message: `a message ... ${new Date().getMilliseconds()}`
 }];
 
+var typping = [];
+
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
@@ -19,13 +21,26 @@ io.on("connection", socket => {
  socket.emit("messages", messages);
 
  socket.on("new-message", (data) => {
-   console.log(data, "dataaaa");
    messages.push(data);
 
    io.sockets.emit('messages', messages);
- })
+ });
+
+ socket.on("is-typping", data => {
+  // data is a user
+  if (typping.filter(user => user == data).length < 1) {
+    typping.push(data);
+  }
+  io.sockets.emit('typping', typping);
+ });
+
+ socket.on("is-not-typping", data => {
+  // data is a user
+  typping = typping.filter(user => user != data);
+  io.sockets.emit('typping', typping);
+ });
 });
 
-server.listen(8080, () => {
-  console.log('Server running in 8080');
+server.listen(8090, () => {
+  console.log('Server running in 8090');
 });

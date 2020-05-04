@@ -8,9 +8,14 @@
 <body>
   <div id="messages"></div>
 
+  <div id="activity"></div>
   <form onSubmit="return sendMessage(this)">
     <input type="text" id="username" placeholder="name">
-    <input type="text" id="text" placeholder="message">
+    <input
+      type="text" id="text" placeholder="message"
+      onfocus="return isTypping(this)"
+      onfocusout="return isNotTypping(this)"
+    >
     <input type="submit" value="send">
   </form>
 </body>
